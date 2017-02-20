@@ -9,6 +9,8 @@
 namespace app\Http\Middleware;
 
 use Closure;
+use Validator;
+use App\Services\Helper;
 
 class VerifyUser
 {
@@ -17,19 +19,27 @@ class VerifyUser
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  string|null  $guard
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|alpha_dash|min:4|max:16',
-            'name'     => 'required|min:2|max:10',
+            'username' => 'required|alpha_dash|min:4|max:10',
+            'name'     => 'required|min:2|max:16',
             'email'    => 'required|email',
-            'password' => 'required|min:8|max:20|confirmed'
+            'password' => 'required|min:8|max:20|confirmed',
+            'password_confirmation' => 'required|min:8|max:20'
         ]);
+        $friendly_names = [
+            'username' => '用户名',
+            'name'     => '昵称',
+            'email'    => 'email',
+            'password' => '密码',
+            'password_confirmation'=>'确认的密码'
+        ];
+        $validator->setAttributeNames($friendly_names);
         if ($validator->fails()) {
-            return response()->json(Helper::createResponseData('21001','登录成功'));
+            return response()->json(Helper::createResponseData('31101',$validator->errors()));
         }
         return $next($request);
     }
