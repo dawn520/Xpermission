@@ -17,4 +17,5 @@ Route::get('/', function () {
 
 Route::auth();
 
-Route::post('/addUser', ['middleware' => 'VerifyUser','uses'=>'UserController@addUser']);
+Route::post('/addUser', 'UserController@addUser');
+Route::get('/userList', 'UserController@showUserList');
