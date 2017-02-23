@@ -19,3 +19,7 @@ Route::auth();
 
 Route::post('/addUser', 'UserController@addUser');
 Route::get('/userList', 'UserController@showUserList');
+Route::post('/addPermission', 'UserController@addPermission');
+Route::get('/permissionList', 'UserController@showPermissionList');
+Route::post('/addRole', 'UserController@addRole');
+Route::get('/roleList', 'UserController@showRoleList');

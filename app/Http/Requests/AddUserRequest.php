@@ -27,10 +27,10 @@ class AddUserRequest extends Request
     public function rules()
     {
         return [
-            'username' => 'required|alpha_dash|min:4|max:16',
-            'name'     => 'required|min:2|max:16',
-            'email'    => 'required|email',
-            'password' => 'required|min:8|max:20|confirmed',
+            'username'              => 'required|alpha_dash|min:4|max:16',
+            'name'                  => 'required|min:2|max:16',
+            'email'                 => 'required|email',
+            'password'              => 'required|min:8|max:20|confirmed',
             'password_confirmation' => 'required|min:8|max:20'
         ];
     }
@@ -43,11 +43,11 @@ class AddUserRequest extends Request
     public function attributes()
     {
         return [
-            'username' => '用户名',
-            'name'     => '昵称',
-            'email'    => 'email',
-            'password' => '密码',
-            'password_confirmation'=>'确认的密码'
+            'username'              => '用户名',
+            'name'                  => '昵称',
+            'email'                 => 'email',
+            'password'              => '密码',
+            'password_confirmation' => '确认的密码'
         ];
     }
 
@@ -69,8 +69,8 @@ class AddUserRequest extends Request
     {
         return [
             'username' => $this->username,
-            'name' => $this->name,
-            'email' => $this->email,
+            'name'     => $this->name,
+            'email'    => $this->email,
             'password' => bcrypt($this->password)
         ];
     }
