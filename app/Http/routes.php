@@ -23,3 +23,7 @@ Route::post('/addPermission', 'UserController@addPermission');
 Route::get('/permissionList', 'UserController@showPermissionList');
 Route::post('/addRole', 'UserController@addRole');
 Route::get('/roleList', 'UserController@showRoleList');
+Route::get('/allPermissions', 'UserController@showaAllPermissions');
+Route::get('/groupList', 'UserController@showGroupList');
+Route::post('/addGroup', 'UserController@addGroup');
+Route::get('/allGroup', 'UserController@showAllGroup');
