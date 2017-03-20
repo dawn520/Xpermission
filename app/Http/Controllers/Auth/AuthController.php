@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Services\Helper;
+use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -77,5 +80,21 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    /**
+     * 处理认证
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function postLogin(Request $request)
+    {
+        // 尝试登录
+        if (Auth::attempt(['username' => $request->input('username'), 'password' => $request->input('password')])) {
+            // 认证通过...
+            return response()->json(Helper::createResponseData('1','登录成功'));
+        }
+        return response()->json(Helper::createResponseData('30001','登录失败'));
     }
 }

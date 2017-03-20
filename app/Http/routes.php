@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::auth();
+Route::post('/login', 'Auth\AuthController@postLogin');
 
 Route::post('/addUser', 'UserController@addUser');
 Route::get('/userList', 'UserController@showUserList');
