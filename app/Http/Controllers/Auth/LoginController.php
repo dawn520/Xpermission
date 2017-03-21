@@ -7,6 +7,7 @@ use App\Services\Helper;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Lang;
 use Validator;
 
 class LoginController extends Controller
@@ -55,7 +56,7 @@ class LoginController extends Controller
      * Handle an authentication attempt.
      *
      * @param Request $request
-     * @return Response
+     * @return array
      */
     public function postLogin(Request $request)
     {
@@ -63,7 +64,7 @@ class LoginController extends Controller
             $this->username() => 'required', 'password' => 'required',
         ]);
         if ($validator->fails()) {
-            return response()->json(Helper::createResponseData('30001', '登录成功',$validator->errors()));
+            return $this->error("登录失败：",$validator->errors(),400011);
         }
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -86,20 +87,13 @@ class LoginController extends Controller
 
         return $this->sendFailedLoginResponse($request);
 
-
-        // 尝试登录
-        if (Auth::attempt(['username' => $request->input('username'), 'password' => $request->input('password')])) {
-            // 认证通过...
-            return response()->json(Helper::createResponseData('1', '登录成功'));
-        }
-        return response()->json(Helper::createResponseData('30001', '登录失败'));
     }
 
     /**
-     * Redirect the user after determining they are locked out.
+     * Redirect the user after determining they are locked out
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return array
      */
     protected function sendLockoutResponse(Request $request)
     {
@@ -112,17 +106,16 @@ class LoginController extends Controller
         $errors = [$this->username() => $message];
 
         if ($request->expectsJson()) {
-            return response()->json($errors, 423);
+            return $this->error("登录失败:".$errors['username'],400014,$errors);
         }
-
-        return response()->json(Helper::createResponseData('30001', '登录失败'));
+        return $this->error("登录失败:".$errors['username'],400015,$errors);
     }
 
     /**
      * Send the response after the user was authenticated.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     protected function sendLoginResponse(Request $request)
     {
@@ -130,24 +123,24 @@ class LoginController extends Controller
 
         $this->clearLoginAttempts($request);
 
-        return response()->json(Helper::createResponseData('1', '登录成功'));
+        return $this->success("登录成功!");
     }
 
     /**
      * Get the failed login response instance.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return array
      */
     protected function sendFailedLoginResponse(Request $request)
     {
         $errors = [$this->username() => trans('auth.failed')];
 
         if ($request->expectsJson()) {
-            return response()->json(Helper::createResponseData('30001', '登录失败:'.$errors['username'],$errors));
+            return $this->error("登录失败:".$errors['username'],400012,$errors);
         }
 
-        return response()->json(Helper::createResponseData('30001', '登录失败'));
+        return $this->error("登录失败:认证失败!",400013);
     }
 
     /**
@@ -162,6 +155,6 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        return response()->json(Helper::createResponseData('1', '注销成功'));
+        return $this->success("注销成功！");
     }
 }

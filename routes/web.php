@@ -16,8 +16,8 @@ Route::get('/', function () {
 });
 
 
-//Route::auth();
-Route::post('/login', 'Auth\LoginController@postLogin');
+Route::auth();
+//Route::post('/login', 'Auth\LoginController@postLogin');
 Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::post('/addUser', 'UserController@addUser');
@@ -30,3 +30,7 @@ Route::get('/allPermissions', 'UserController@showaAllPermissions');
 Route::get('/groupList', 'UserController@showGroupList');
 Route::post('/addGroup', 'UserController@addGroup');
 Route::get('/allGroup', 'UserController@showAllGroup');
+
+Route::get('/dist/{sign}', function ($sign) {
+    return redirect('http://localhost:8080/dist/'.$sign);
+});

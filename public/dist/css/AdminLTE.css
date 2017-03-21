@@ -1300,6 +1300,8 @@ a:focus {
   color: #dd4b39;
 }
 .form-group.has-error .form-control,
+.form-group.has-error .el-select .el-input .el-input__inner,
+.form-group.has-error .el-input .el-input__inner,
 .form-group.has-error .input-group-addon {
   border-color: #dd4b39;
   box-shadow: none;
