@@ -1,11 +1,11 @@
-#Xpermission
+# Xpermission
 基于laravel 5.4，vue.js 2.0的单网页权限管理系统！
-##使用
-###前端
+## 使用
+### 前端
 adminLTE-spa(https://github.com/xixi2005/adminLTE-spa)
-###后端
+### 后端
 laravel 5.4
-##状态码规范
+## 状态码规范
 
 状态码描述<br>
 -1	    返回失败（默认）<br>
